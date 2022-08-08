@@ -8,7 +8,7 @@ $(function () {
 $('.input-button').on('click', function () {
   let mainInput = $('#main-input');
   var clickedBtn = $(this);
-  mainInput.val(mainInput.val() + clickedBtn.text());
+  mainInput.val(mainInput.val() + clickedBtn.attr('data-val'));
 })
 
 $('#ac-button').on('click', function () {
