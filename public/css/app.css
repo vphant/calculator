@@ -2,6 +2,10 @@
     min-width: 100px;
 }
 
+.calc-button.btn-light {
+    background-color: #F1F3F4;
+}
+
 .calc-input {
     min-width: 450px!important;
 }
