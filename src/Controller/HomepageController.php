@@ -13,10 +13,6 @@ class HomepageController extends AbstractController
      */
     public function index(): Response
     {
-        $number = random_int(0, 100);
-
-        return $this->render('homepage/index.html.twig', [
-            'number' => $number,
-        ]);
+        return $this->render('homepage/index.html.twig');
     }
 }
