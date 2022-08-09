@@ -40,7 +40,12 @@ $('#submit-button').on('click', function () {
     },
     error: function (errorResponse) {
       $('#error-wrapper').show();
-      $('#error-text').text('Invalid expression');
+
+      if (500 === errorResponse.status) {
+        $('#error-text').text('Server error');
+      } else {
+        $('#error-text').text('Invalid expression');
+      }
     }
   });
 })
