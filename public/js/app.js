@@ -17,3 +17,23 @@ $('#ac-button').on('click', function () {
   mainInput.val('');
   mainInput.focus();
 })
+
+$('#submit-button').on('click', function () {
+  let mainInput = $('#main-input');
+  let data = {
+    'inputValue': mainInput.val()
+  };
+
+  $.ajax({
+    type: 'POST',
+    url: '/calculate',
+    data: JSON.stringify(data),
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json',
+    success: function (data) {
+      alert(data);
+    },
+    error: function (errMsg) {
+    }
+  });
+})
