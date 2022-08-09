@@ -38,13 +38,13 @@ $('#submit-button').on('click', function () {
       mainInput.val(successResponse.result);
       mainInput.focus();
     },
-    error: function (errorResponse) {
+    error: function (xhr, status, error) {
       $('#error-wrapper').show();
-
-      if (500 === errorResponse.status) {
+      if (500 === xhr.status) {
         $('#error-text').text('Server error');
       } else {
-        $('#error-text').text('Invalid expression');
+        var errorResponseData = JSON.parse(xhr.responseText);
+        $('#error-text').text(errorResponseData.message);
       }
     }
   });

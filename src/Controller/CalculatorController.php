@@ -42,7 +42,14 @@ final class CalculatorController extends AbstractController
             );
         }
 
-        $result = $this->calculatorService->calculateResult($requestPayload->getInputValue());
+        try {
+            $result = $this->calculatorService->calculateResult($requestPayload->getInputValue());
+        } catch (\DivisionByZeroError $e) {
+            return new JsonResponse(
+                ['message' => 'Division by zero'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
 
         return new JsonResponse(['result' => $result]);
     }
