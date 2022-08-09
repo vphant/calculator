@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Dto\CalculateRequestPayload;
+use App\Service\CalculatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,8 @@ final class CalculatorController extends AbstractController
 {
     public function __construct(
         private SerializerInterface $serializer,
-        private ValidatorInterface $validator
+        private ValidatorInterface $validator,
+        private CalculatorService $calculatorService
     ) {
     }
 
@@ -40,6 +42,8 @@ final class CalculatorController extends AbstractController
             );
         }
 
-        return new JsonResponse('OK');
+        $result = $this->calculatorService->calculateResult($requestPayload->getInputValue());
+
+        return new JsonResponse(['result' => $result]);
     }
 }

@@ -31,11 +31,14 @@ $('#submit-button').on('click', function () {
     data: JSON.stringify(data),
     contentType: 'application/json; charset=utf-8',
     dataType: 'json',
-    success: function (data) {
+    success: function (successResponse) {
       $('#error-wrapper').hide();
       $('#error-text').text('');
+      let mainInput = $('#main-input');
+      mainInput.val(successResponse.result);
+      mainInput.focus();
     },
-    error: function (response) {
+    error: function (errorResponse) {
       $('#error-wrapper').show();
       $('#error-text').text('Invalid expression');
     }
