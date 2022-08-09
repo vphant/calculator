@@ -3,6 +3,7 @@ $(function () {
   let mainInput = $('#main-input');
   mainInput.val('');
   mainInput.focus();
+  $('#error-wrapper').hide();
 });
 
 $('.input-button').on('click', function () {
@@ -31,9 +32,12 @@ $('#submit-button').on('click', function () {
     contentType: 'application/json; charset=utf-8',
     dataType: 'json',
     success: function (data) {
-      alert(data);
+      $('#error-wrapper').hide();
+      $('#error-text').text('');
     },
-    error: function (errMsg) {
+    error: function (response) {
+      $('#error-wrapper').show();
+      $('#error-text').text('Invalid expression');
     }
   });
 })
