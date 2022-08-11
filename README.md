@@ -21,3 +21,8 @@ docker exec -it calculator-php-1 php bin/phpunit
 ```
 
 ![screenshot](screenshot.png)
+
+### TODO
+
+- add frontend tests using symfony/panther
+- add unit test for service
