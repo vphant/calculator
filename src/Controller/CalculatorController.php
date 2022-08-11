@@ -4,18 +4,16 @@ namespace App\Controller;
 
 use App\Dto\CalculateRequestPayload;
 use App\Service\CalculatorService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class CalculatorController extends AbstractController
 {
     public function __construct(
-        private SerializerInterface $serializer,
         private ValidatorInterface $validator,
         private CalculatorService $calculatorService
     ) {
@@ -23,16 +21,10 @@ final class CalculatorController extends AbstractController
 
     /**
      * @Route("/calculate", methods={"POST"})
+     * @ParamConverter(name="requestPayload", converter="json_converter")
      */
-    public function calculate(Request $request): JsonResponse
+    public function calculate(CalculateRequestPayload $requestPayload): JsonResponse
     {
-        /** @var CalculateRequestPayload $requestPayload */
-        $requestPayload = $this->serializer->deserialize(
-            $request->getContent(),
-            CalculateRequestPayload::class,
-            'json',
-        );
-
         $errors = $this->validator->validate($requestPayload);
 
         if ($errors->count() > 0) {
