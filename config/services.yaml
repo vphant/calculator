@@ -25,3 +25,7 @@ services:
     App\Request\JsonParamConverter:
         tags:
             - { name: 'request.param_converter', converter: 'json_converter' }
+
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

@@ -90,8 +90,28 @@ class CalculatorControllerTest extends WebTestCase
             ['90-7-'],
             ['100**'],
             ['100*'],
+        ];
+    }
+
+    /**
+     * @dataProvider getDivisionByZeroCases
+     */
+    public function testDivisionByZero($inputValue): void
+    {
+        $this->expectException(\DivisionByZeroError::class);
+
+        $client = static::createClient();
+        $client->jsonRequest('POST', '/calculate', ['inputValue' => $inputValue]);
+
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+    }
+
+    public function getDivisionByZeroCases()
+    {
+        return [
             ['800 - 5 / 0 + 44'],
             ['1  /0']
         ];
     }
+
 }
