@@ -17,7 +17,7 @@ Based on https://github.com/dunglas/symfony-docker
 Run
 
 ```
-docker exec -it calculator-php-1 php bin/phpunit
+docker compose exec php bin/phpunit
 ```
 
 ![screenshot](screenshot.png)
