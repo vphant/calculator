@@ -6,6 +6,8 @@ class CalculatorService
 {
     public function calculateResult($inputValue)
     {
+        $inputValue = preg_replace('/\s+/', '', $inputValue);
+
         if (empty($inputValue)) {
             return 0;
         }
