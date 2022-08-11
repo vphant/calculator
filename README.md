@@ -19,3 +19,5 @@ Run
 ```
 docker exec -it calculator-php-1 php bin/phpunit
 ```
+
+![screenshot](screenshot.png)
