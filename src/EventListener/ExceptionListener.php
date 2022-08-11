@@ -2,10 +2,10 @@
 
 namespace App\EventListener;
 
+use App\Exception\InvalidFormatException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionListener
 {
@@ -14,12 +14,19 @@ class ExceptionListener
         $exception = $event->getThrowable();
 
         if ($exception instanceof \DivisionByZeroError) {
-            $response = new JsonResponse(
-                ['message' => 'Division by zero'],
-                Response::HTTP_BAD_REQUEST
-            );
-
-            $event->setResponse($response);
+            $event->setResponse($this->createErrorJsonResponse('Division by zero'));
         }
+
+        if ($exception instanceof InvalidFormatException) {
+            $event->setResponse($this->createErrorJsonResponse('Invalid format'));
+        }
+    }
+
+    private function createErrorJsonResponse(string $message): JsonResponse
+    {
+        return new JsonResponse(
+            ['message' => $message],
+            Response::HTTP_BAD_REQUEST
+        );
     }
 }

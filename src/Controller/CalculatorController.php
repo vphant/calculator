@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Dto\CalculateRequestPayload;
+use App\Exception\InvalidFormatException;
 use App\Service\CalculatorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,10 +29,7 @@ final class CalculatorController extends AbstractController
         $errors = $this->validator->validate($requestPayload);
 
         if ($errors->count() > 0) {
-            return new JsonResponse(
-                ['message' => 'Invalid format'],
-                Response::HTTP_BAD_REQUEST
-            );
+            throw new InvalidFormatException();
         }
 
         $result = $this->calculatorService->calculateResult($requestPayload->getInputValue());
